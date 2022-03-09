@@ -20,7 +20,7 @@ const { t } = useI18n()
     </div>
     <p>
       <a rel="noreferrer" href="https://github.com/antfu/vitesse" target="_blank">
-        Vitesse
+        soul
       </a>
     </p>
     <p>
