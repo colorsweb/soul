@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "preserve",
     "baseUrl": ".",
     "module": "ESNext",
     "target": "es2016",
@@ -22,5 +23,8 @@
       "~/*": ["src/*"]
     }
   },
+  "includes": [
+    "src/**/*.tsx",
+  ],
   "exclude": ["dist", "node_modules", "cypress"]
 }

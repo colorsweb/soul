@@ -5,18 +5,33 @@ const props = defineProps({
   n: Number,
   mineNum: Number,
   label: String,
-  value: Number
+  value: Number,
 })
-const matrix = computed(() => {
-  console.log(props.m)
-  //@ts-ignore
-  return Array.from({ length: props.m }, (_, i) => Array.from({ length: props.n }, (_, j) => i * props.m + j + 1))
-})
+console.log('props',props)
+// @ts-expect-error
+const matrix = reactive(Array.from({ length: props.m },
+// @ts-expect-error
+  (_, i) => Array.from({ length: props.n }, (_, j) => ({ type: 1 }))))
 
+// const typeMap =
+
+const dealItem = (item) => {
+  switch (item.type) {
+    case 1:
+      return ''
+      break
+    case 2:
+
+    default:
+      break
+  }
+}
 </script>
 
 <template>
   <div v-for="arr of matrix">
-    <button btn-green w-5 h-5 v-for="i in arr">{{ i }}</button>
+    <button v-for="item in arr" border bg-gray w-8 h-8>
+      {{ dealItem(item) }}
+    </button>
   </div>
 </template>

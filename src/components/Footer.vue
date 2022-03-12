@@ -1,7 +1,17 @@
 <script setup lang="ts">
-import { toggleDark } from '~/composables'
+import { toggleDark, useMode } from '~/composables'
+import { UseColorMode } from '@vueuse/components'
+
 
 const { t, availableLocales, locale } = useI18n()
+
+const mode = useColorMode({
+  modes: {
+    contrast: 'contrast dark',
+    cafe: 'cafe',
+  },
+})
+const { next } = useCycleList(['dark', 'cafe'], { initialValue: mode })
 
 const toggleLocales = () => {
   // change to some real logic
@@ -19,7 +29,7 @@ const toggleLocales = () => {
     <button
       class="icon-btn mx-2 !outline-none"
       :title="t('button.toggle_dark')"
-      @click="toggleDark()"
+      @click="next()"
     >
       <div i="carbon-sun dark:carbon-moon" />
     </button>
@@ -44,3 +54,11 @@ const toggleLocales = () => {
     </router-link>
   </nav>
 </template>
+<style>
+html.cafe {
+  filter: sepia(0.9) hue-rotate(315deg) brightness(0.9);
+}
+html.contrast {
+  filter: contrast(2);
+}
+</style>
