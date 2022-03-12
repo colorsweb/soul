@@ -9,28 +9,39 @@ const start = (val: number) => {
   matrixValue.value = val
   showMineArea.value = !showMineArea.value
 }
-const end = () => {
+const back = () => {
   showMineArea.value = !showMineArea.value
+}
+
+const MineAreaKey = ref(new Date())
+const restart = () => {
+  MineAreaKey.value = new Date()
 }
 
 </script>
 
 <template>
-  <div>
+  <div class="mine-container">
     <div text-4xl>
       <div i-mdi-mine inline-block />
     </div>
     <div>
       <n-popselect v-if="!showMineArea" :options="options" trigger="click" :on-update:value="start">
-        <n-button type="primary">
-          start
-        </n-button>
+        <n-button type="primary">start</n-button>
       </n-popselect>
-      <MineArea v-if="showMineArea" v-bind="options[matrixValue]" />
-      <br>
-      <n-button v-if="showMineArea" type="warning" @click="end()">
-        end
-      </n-button>
+      <MineArea :key="MineAreaKey" v-if="showMineArea" v-bind="options[matrixValue]" />
+      <br />
+      <n-button v-if="showMineArea" type="warning" @click="back">back</n-button>
+      <br />
+      <n-button v-if="showMineArea" type="info" @click="restart">restart</n-button>
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.mine-container {
+  .n-button {
+    margin-bottom: 10px;
+  }
+}
+</style>
