@@ -14,7 +14,7 @@ export class MineBox {
   status: string
   num: number
   numColor?: string
-  mine: boolean
+  mine?: boolean
   flag: boolean
   offActive: boolean
   disabled: boolean
@@ -35,8 +35,22 @@ export class MineBox {
     }
   }
 
+  /**
+   * totalMineNum 当前录入的地雷数
+   * mineNum 应该录入的地雷数
+   * onBoxNum 已经打开的格子
+   */
   static totalMineNum: number = 0
   static mineNum: number
+  static onBoxNum: number = 0
+  static totalBoxNumber: number
+  static dealOnBoxNum() {
+    MineBox.onBoxNum++
+    if (MineBox.onBoxNum === MineBox.totalBoxNumber - MineBox.mineNum) {
+      return true
+    }
+    return false
+  }
 
   // 设置数字和颜色
   setNumStyle(n: number, c: string) {

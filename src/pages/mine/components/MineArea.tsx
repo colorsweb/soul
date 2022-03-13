@@ -1,5 +1,5 @@
 import './MineArea.scss'
-import { fillMine, init, onNumMineBoxClick, gameover, displayMaxSafeArea } from './utils'
+import { fillMine, init, onNumMineBoxClick, gameover, displayMaxSafeArea,dealOpenBox } from './utils'
 import { MineBox } from './mineBox'
 import classnames from 'classnames'
 
@@ -29,13 +29,15 @@ export default defineComponent({
 
     MineBox.mineNum = props.mineNum
     MineBox.totalMineNum = 0
+    MineBox.onBoxNum = 0
+    MineBox.totalBoxNumber = props.m * props.n
     const matrix = reactive(Array.from({ length: props.m },
       () => Array.from({ length: props.n }, () => (new MineBox(props.odds)))))
     watch(() => matrix, (matrix) => {
       if (MineBox.totalMineNum < props.mineNum) {
-        fillMine(matrix, props.m, props.n, props.mineNum, MineBox)
+        fillMine(matrix, props.m, props.n, props.mineNum)
       }
-      console.log(MineBox.totalMineNum,props.mineNum)
+      console.log(MineBox.totalMineNum)
       init(matrix, props.m, props.n)
     }, { immediate: true })
 
@@ -53,7 +55,7 @@ export default defineComponent({
 
     const click = (item: any, i: number, j: number) => {
       if (item.status === 'off' && !item.flag) {
-        item.status = 'on'
+        dealOpenBox(item)
         if (item.mine) {
           gameover(matrix)
         }

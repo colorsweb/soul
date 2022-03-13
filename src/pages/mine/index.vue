@@ -2,7 +2,6 @@
 import { NButton, NPopselect } from 'naive-ui'
 import MineArea from './components/MineArea'
 import { options } from './config'
-
 const showMineArea = ref(false)
 const matrixValue = ref(0)
 const start = (val: number) => {

@@ -1,9 +1,8 @@
 import { numColorMap, move } from './config'
+import {MineBox} from './mineBox'
 
 // 初始化前加满地雷
-export const fillMine = (matrix: any, m: number, n: number, mineNum: number, MineBox: any) => {
-  // console.log('mineNum', mineNum)
-  // console.log('totalMineNum', totalMineNum)
+export const fillMine = (matrix: any, m: number, n: number, mineNum: number) => {
   for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
       if (matrix[i][j].mine) continue
@@ -13,7 +12,7 @@ export const fillMine = (matrix: any, m: number, n: number, mineNum: number, Min
     }
   }
   if (MineBox.totalMineNum < mineNum) {
-    fillMine(matrix, m, n, mineNum, MineBox.totalMineNum)
+    fillMine(matrix, m, n, mineNum)
   }
 }
 
@@ -84,9 +83,10 @@ export const onNumMineBoxClick = (matrix: any, i: number, j: number, item: any) 
     move.forEach((arr) => {
       const [x, y] = [arr[0], arr[1]]
       if (matrix[i + x] && matrix[i + x][j + y]) {
-        if (matrix[i + x][j + y].status === 'off') {
-          deps.push(matrix[i + x][j + y])
-          matrix[i + x][j + y].toggleOffActive()
+        const tempBox = matrix[i + x][j + y]
+        if (tempBox.status === 'off' && !tempBox.flag) {
+          deps.push(tempBox)
+          tempBox.toggleOffActive()
         }
       }
     })
@@ -105,6 +105,18 @@ export const onNumMineBoxClick = (matrix: any, i: number, j: number, item: any) 
 }
 
 /**
+ * 打开盒子时添加计数器以及判断是否胜利
+ */
+export const dealOpenBox = (item:any) => {
+  item.status = 'on'
+  const res = MineBox.dealOnBoxNum()
+  if (res) {
+    setTimeout(() => alert('success'),200)
+  }
+}
+
+
+/**
  * 展示最大安全区域
  * 把周围非旗帜打开
  * 如果num是0，继续调用
@@ -115,7 +127,7 @@ export const displayMaxSafeArea = (matrix: any, i: number, j: number) => {
     if (matrix[i + x] && matrix[i + x][j + y]) {
       const tempBox = matrix[i + x][j + y]
       if (tempBox.status === 'off' && !tempBox.flag) {
-        tempBox.status = 'on'
+        dealOpenBox(tempBox)
         if (tempBox.num === 0) {
           displayMaxSafeArea(matrix, i + x, j + y)
         }
