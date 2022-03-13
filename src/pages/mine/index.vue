@@ -21,11 +21,11 @@ const restart = () => {
 </script>
 
 <template>
-  <div class="mine-container">
+  <div class="main-container">
     <div text-4xl>
       <div i-mdi-mine inline-block />
     </div>
-    <div>
+    <div class="mine-container">
       <n-popselect v-if="!showMineArea" :options="options" trigger="click" :on-update:value="start">
         <n-button type="primary">start</n-button>
       </n-popselect>
@@ -39,7 +39,12 @@ const restart = () => {
 </template>
 
 <style lang="scss">
-.mine-container {
+.main-container {
+  .mine-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .n-button {
     margin-bottom: 10px;
   }

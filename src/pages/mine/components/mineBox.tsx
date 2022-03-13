@@ -26,11 +26,20 @@ export class MineBox {
     this.num = 0
     this.offActive = false
     this.disabled = false
-    this.mine = Math.random() <= this._odds
+    if (MineBox.totalMineNum < MineBox.mineNum) {
+      // 根据概率生成地雷
+      this.mine = Math.random() <= this._odds
+      if (this.mine) {
+        MineBox.totalMineNum += 1
+      }
+    }
   }
 
+  static totalMineNum: number = 0
+  static mineNum: number
+
   // 设置数字和颜色
-  setNumStyle(n:number,c:string) {
+  setNumStyle(n: number, c: string) {
     this.num = n
     this.numColor = c
   }
