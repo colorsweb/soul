@@ -29,9 +29,8 @@ export class MineBox {
     if (MineBox.totalMineNum < MineBox.mineNum) {
       // 根据概率生成地雷
       this.mine = Math.random() <= this._odds
-      if (this.mine) {
+      if (this.mine)
         MineBox.totalMineNum += 1
-      }
     }
   }
 
@@ -40,15 +39,15 @@ export class MineBox {
    * mineNum 应该录入的地雷数
    * onBoxNum 已经打开的格子
    */
-  static totalMineNum: number = 0
+  static totalMineNum = 0
   static mineNum: number
-  static onBoxNum: number = 0
+  static onBoxNum = 0
   static totalBoxNumber: number
   static dealOnBoxNum() {
     MineBox.onBoxNum++
-    if (MineBox.onBoxNum === MineBox.totalBoxNumber - MineBox.mineNum) {
+    if (MineBox.onBoxNum === MineBox.totalBoxNumber - MineBox.mineNum)
       return true
-    }
+
     return false
   }
 

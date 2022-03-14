@@ -1,7 +1,7 @@
 import './MineArea.scss'
-import { fillMine, init, onNumMineBoxClick, gameover, displayMaxSafeArea,dealOpenBox } from './utils'
-import { MineBox } from './mineBox'
 import classnames from 'classnames'
+import { dealOpenBox, displayMaxSafeArea, fillMine, gameover, init, onNumMineBoxClick } from './utils'
+import { MineBox } from './mineBox'
 
 export default defineComponent({
   name: 'MineArea',
@@ -34,9 +34,9 @@ export default defineComponent({
     const matrix = reactive(Array.from({ length: props.m },
       () => Array.from({ length: props.n }, () => (new MineBox(props.odds)))))
     watch(() => matrix, (matrix) => {
-      if (MineBox.totalMineNum < props.mineNum) {
+      if (MineBox.totalMineNum < props.mineNum)
         fillMine(matrix, props.m, props.n, props.mineNum)
-      }
+
       console.log(MineBox.totalMineNum)
       init(matrix, props.m, props.n)
     }, { immediate: true })
@@ -55,10 +55,10 @@ export default defineComponent({
 
     const click = (item: any, i: number, j: number) => {
       if (item.status === 'off' && !item.flag) {
-        dealOpenBox(item)
-        if (item.mine) {
+        dealOpenBox(item, matrix)
+        if (item.mine)
           gameover(matrix)
-        }
+
         if (item.num === 0) {
           // 最大安全区域
           displayMaxSafeArea(matrix, i, j)
@@ -69,11 +69,11 @@ export default defineComponent({
         item.flag = false
         return
       }
-      if (item.num > 0) {
+      if (item.num > 0)
         onNumMineBoxClick(matrix, i, j, item)
-      }
     }
     const mouseup = (e: MouseEvent, item: any, i: number, j: number) => {
+      console.log(1111)
       if (item.flag) {
         item.flag = false
         return
@@ -96,10 +96,10 @@ export default defineComponent({
                     'button-off': item.status === 'off',
                     'button-on': item.status === 'on',
                     'button-off_active': item.offActive,
-                    'button-disabled': item.disabled
+                    'button-disabled': item.disabled,
                   })}
-                    onClick={() => click(item, i, j)}
-                    onMouseup={(e) => mouseup(e, item, i, j)}
+                  onClick={() => click(item, i, j)}
+                  onMouseUp={(e: MouseEvent) => mouseup(e, item, i, j)}
                   >{dealItem(item)}
                   </button>
                 )

@@ -1,5 +1,5 @@
-import { numColorMap, move } from './config'
-import {MineBox} from './mineBox'
+import { move, numColorMap } from './config'
+import { MineBox } from './mineBox'
 
 // 初始化前加满地雷
 export const fillMine = (matrix: any, m: number, n: number, mineNum: number) => {
@@ -11,9 +11,8 @@ export const fillMine = (matrix: any, m: number, n: number, mineNum: number) => 
       if (mineNum === MineBox.totalMineNum) return
     }
   }
-  if (MineBox.totalMineNum < mineNum) {
+  if (MineBox.totalMineNum < mineNum)
     fillMine(matrix, m, n, mineNum)
-  }
 }
 
 // 初始化遍历根据地雷生成数字
@@ -52,15 +51,14 @@ export const gameover = (matrix: any) => {
   for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
       matrix[i][j].disabled = true
-      if (matrix[i][j].mine) {
+      if (matrix[i][j].mine)
         matrix[i][j].status = 'on'
-      }
     }
   }
 }
 
-// 单击开启的数字box
-export const onNumMineBoxClick = (matrix: any, i: number, j: number, item: any) => {
+// 获取旗帜数和正确的旗帜数
+const getFlagNum = (matrix: any, i: number, j: number, item: any) => {
   // 旗帜数
   let flagNum = 0
   // 正确的旗帜数
@@ -70,12 +68,17 @@ export const onNumMineBoxClick = (matrix: any, i: number, j: number, item: any) 
     if (matrix[i + x] && matrix[i + x][j + y]) {
       if (matrix[i + x][j + y].flag) {
         flagNum += 1
-        if (matrix[i + x][j + y].mine) {
+        if (matrix[i + x][j + y].mine)
           trueFlagNum += 1
-        }
       }
     }
   })
+  return { flagNum, trueFlagNum }
+}
+
+// 单击开启的数字box
+export const onNumMineBoxClick = (matrix: any, i: number, j: number, item: any) => {
+  const { flagNum, trueFlagNum } = getFlagNum(matrix, i, j, item)
 
   // 如果旗帜数量小于雷的数量，则周围off盒子闪烁一次
   if (flagNum < item.num) {
@@ -94,12 +97,27 @@ export const onNumMineBoxClick = (matrix: any, i: number, j: number, item: any) 
     setTimeout(() => {
       deps.forEach((mineBox: any) => mineBox.toggleOffActive())
     }, 100)
-  } else {
+  }
+  else {
     if (trueFlagNum < item.num) {
       gameover(matrix)
-    } else {
+    }
+    else {
       // todo 最大安全区域
       displayMaxSafeArea(matrix, i, j)
+    }
+  }
+}
+
+const displaySuccess = (matrix: any) => {
+  const m = matrix.length
+  const n = matrix[0].length
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (matrix[i][j].mine && !matrix[i][j].flag)
+        matrix[i][j].flag = true
+      if (!matrix[i][j].mine && matrix[i][j].status === 'off')
+        matrix[i][j].status = 'on'
     }
   }
 }
@@ -107,14 +125,14 @@ export const onNumMineBoxClick = (matrix: any, i: number, j: number, item: any) 
 /**
  * 打开盒子时添加计数器以及判断是否胜利
  */
-export const dealOpenBox = (item:any) => {
+export const dealOpenBox = (item: any, matrix: any) => {
   item.status = 'on'
   const res = MineBox.dealOnBoxNum()
   if (res) {
-    setTimeout(() => alert('success'),200)
+    displaySuccess(matrix)
+    setTimeout(() => alert('success'), 200)
   }
 }
-
 
 /**
  * 展示最大安全区域
@@ -127,10 +145,10 @@ export const displayMaxSafeArea = (matrix: any, i: number, j: number) => {
     if (matrix[i + x] && matrix[i + x][j + y]) {
       const tempBox = matrix[i + x][j + y]
       if (tempBox.status === 'off' && !tempBox.flag) {
-        dealOpenBox(tempBox)
-        if (tempBox.num === 0) {
+        dealOpenBox(tempBox, matrix)
+        const { trueFlagNum } = getFlagNum(matrix, i, j, tempBox)
+        if (tempBox.num === 0 || trueFlagNum === tempBox.num)
           displayMaxSafeArea(matrix, i + x, j + y)
-        }
       }
     }
   })
