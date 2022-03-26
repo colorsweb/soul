@@ -20,19 +20,12 @@ export default defineComponent({
   setup(props: any) {
     // 阻止默认右击事件
     const mine = ref<null | HTMLElement>(null)
-    onMounted(() => {
-      const mineElement = mine.value as HTMLElement
-      mineElement.oncontextmenu = () => {
-        return false
-      }
-    })
-
     MineBox.mineNum = props.mineNum
     MineBox.totalMineNum = 0
     MineBox.onBoxNum = 0
     MineBox.totalBoxNumber = props.m * props.n
     const matrix = reactive(Array.from({ length: props.m },
-      () => Array.from({ length: props.n }, () => (new MineBox(props.odds)))))
+      (_,i) => Array.from({ length: props.n }, (_,j) => (new MineBox(props.odds, [i,j])))))
     watch(() => matrix, (matrix) => {
       if (MineBox.totalMineNum < props.mineNum)
         fillMine(matrix, props.m, props.n, props.mineNum)
@@ -57,7 +50,7 @@ export default defineComponent({
       if (item.status === 'off' && !item.flag) {
         dealOpenBox(item, matrix)
         if (item.mine)
-          gameover(matrix)
+          gameover(matrix, item)
 
         if (item.num === 0) {
           // 最大安全区域
@@ -67,21 +60,24 @@ export default defineComponent({
       }
       if (item.flag) {
         item.flag = false
+        MineBox.totalFlagNumber -= 1
         return
       }
       if (item.num > 0)
         onNumMineBoxClick(matrix, i, j, item)
     }
     const mouseup = (e: MouseEvent, item: any, i: number, j: number) => {
-      console.log(1111)
       if (item.flag) {
         item.flag = false
-        return
+        MineBox.totalFlagNumber -= 1
+        return false
       }
-      if (e.button === 2 && item.status === 'off' && !item.flag) {
-        console.log('右键点击')
+      if (e.button === 2 && item.status === 'off' && !item.flag && MineBox.totalFlagNumber < props.mineNum) {
         item.flag = true
+        MineBox.totalFlagNumber += 1
+        console.log(MineBox.totalFlagNumber)
       }
+      return false
     }
 
     // eslint-disable-next-line react/display-name
@@ -97,9 +93,10 @@ export default defineComponent({
                     'button-on': item.status === 'on',
                     'button-off_active': item.offActive,
                     'button-disabled': item.disabled,
+                    'mine_active': item.mineActive
                   })}
                   onClick={() => click(item, i, j)}
-                  onMouseUp={(e: MouseEvent) => mouseup(e, item, i, j)}
+                  oncontextmenu={(e: MouseEvent) => mouseup(e, item, i, j)}
                   >{dealItem(item)}
                   </button>
                 )

@@ -6,8 +6,8 @@ export const fillMine = (matrix: any, m: number, n: number, mineNum: number) => 
   for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
       if (matrix[i][j].mine) continue
-      matrix.mine = Math.random() <= matrix._odds
-      MineBox.totalMineNum += 1
+      matrix[i][j].mine = Math.random() <= matrix[i][j]._odds
+      matrix[i][j].mine && (MineBox.totalMineNum += 1)
       if (mineNum === MineBox.totalMineNum) return
     }
   }
@@ -36,29 +36,55 @@ export const init = (matrix: any, m: number, n: number) => {
   }
   // 随机打开一个安全（num为0）的盒子
   const idx = Math.floor(Math.random() * safeBoxArr.length)
-  displayMaxSafeArea(matrix, safeBoxArr[idx][0], safeBoxArr[idx][1])
+  const [i,j] = [safeBoxArr[idx][0], safeBoxArr[idx][1]]
+  dealOpenBox(matrix[i][j], matrix)
+  displayMaxSafeArea(matrix, i, j)
 }
 
 /**
  * 点到雷
  * 旗帜已经大于雷数，但是没有覆盖到所有雷
+ * mine 是否点到雷
  */
-export const gameover = (matrix: any) => {
+export const gameover = (matrix: any, item:any) => {
   console.log('gameover')
+  if (item.mine) {
+    item.status = 'on'
+    item.mineActive = true
+  }
   const m = matrix.length
   const n = matrix[0].length
   // 遍历matrix，显示所有雷
   for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
-      matrix[i][j].disabled = true
-      if (matrix[i][j].mine)
-        matrix[i][j].status = 'on'
+      const tempBox = matrix[i][j]
+      tempBox.disabled = true
+      if (tempBox.mine)
+        tempBox.status = 'on'
+      if (tempBox.flag && !tempBox.mine) {
+        dealWrongFlag(tempBox)
+      }
     }
   }
 }
 
+/**
+ * 处理插错的旗子
+ */
+const dealWrongFlag = (item:any) => {
+  setInterval(() => {
+    if (item.flag) {
+      item.status = 'on'
+      item.flag = false
+    } else {
+      item.flag = true
+      item.status = 'off'
+    }
+  }, 500)
+}
+
 // 获取旗帜数和正确的旗帜数
-const getFlagNum = (matrix: any, i: number, j: number, item: any) => {
+const getFlagNum = (matrix: any, i: number, j: number) => {
   // 旗帜数
   let flagNum = 0
   // 正确的旗帜数
@@ -78,7 +104,7 @@ const getFlagNum = (matrix: any, i: number, j: number, item: any) => {
 
 // 单击开启的数字box
 export const onNumMineBoxClick = (matrix: any, i: number, j: number, item: any) => {
-  const { flagNum, trueFlagNum } = getFlagNum(matrix, i, j, item)
+  const { flagNum, trueFlagNum } = getFlagNum(matrix, i, j)
 
   // 如果旗帜数量小于雷的数量，则周围off盒子闪烁一次
   if (flagNum < item.num) {
@@ -100,7 +126,7 @@ export const onNumMineBoxClick = (matrix: any, i: number, j: number, item: any) 
   }
   else {
     if (trueFlagNum < item.num) {
-      gameover(matrix)
+      gameover(matrix,item)
     }
     else {
       // todo 最大安全区域
@@ -114,10 +140,12 @@ const displaySuccess = (matrix: any) => {
   const n = matrix[0].length
   for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
-      if (matrix[i][j].mine && !matrix[i][j].flag)
-        matrix[i][j].flag = true
-      if (!matrix[i][j].mine && matrix[i][j].status === 'off')
-        matrix[i][j].status = 'on'
+      const tempBox = matrix[i][j]
+      tempBox.disabled = true
+      if (tempBox.mine && !tempBox.flag)
+        tempBox.flag = true
+      if (!tempBox.mine && tempBox.status === 'off')
+        tempBox.status = 'on'
     }
   }
 }
@@ -146,7 +174,7 @@ export const displayMaxSafeArea = (matrix: any, i: number, j: number) => {
       const tempBox = matrix[i + x][j + y]
       if (tempBox.status === 'off' && !tempBox.flag) {
         dealOpenBox(tempBox, matrix)
-        const { trueFlagNum } = getFlagNum(matrix, i, j, tempBox)
+        const { trueFlagNum } = getFlagNum(matrix, i + x, j + y)
         if (tempBox.num === 0 || trueFlagNum === tempBox.num)
           displayMaxSafeArea(matrix, i + x, j + y)
       }
