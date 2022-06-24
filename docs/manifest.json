@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/app.6560b002.js",
+    "file": "assets/app.f6e53e7c.js",
     "src": "index.html",
     "isEntry": true,
     "imports": [
@@ -22,7 +22,7 @@
     "file": "assets/vendor.3adcef0a.js"
   },
   "../../../../@vite-plugin-pwa/virtual:pwa-register": {
-    "file": "assets/virtual_pwa-register.981793b8.js",
+    "file": "assets/virtual_pwa-register.a1aacd01.js",
     "src": "../../../../@vite-plugin-pwa/virtual:pwa-register",
     "isDynamicEntry": true
   },
@@ -71,7 +71,7 @@
     ]
   },
   "src/layouts/home.vue": {
-    "file": "assets/home.11adecb4.js",
+    "file": "assets/home.3ed5a4b3.js",
     "src": "src/layouts/home.vue",
     "isDynamicEntry": true,
     "imports": [

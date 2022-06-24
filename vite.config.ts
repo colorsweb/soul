@@ -29,7 +29,7 @@ export default defineConfig({
     outDir: 'docs',
     manifest: true,
   },
-  base: './',
+  base: '/soul/',
   plugins: [
     PkgConfig(),
     OptimizationPersist(),
