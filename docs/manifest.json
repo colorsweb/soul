@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/app.e351ab21.js",
+    "file": "assets/app.6e212737.js",
     "src": "index.html",
     "isEntry": true,
     "imports": [
@@ -9,7 +9,6 @@
     "dynamicImports": [
       "../../../../@vite-plugin-pwa/virtual:pwa-register",
       "src/pages/README.md",
-      "src/pages/[...all].vue",
       "src/pages/hi/[name].vue",
       "src/pages/mine/README.md",
       "src/pages/mine/index.vue",
@@ -17,7 +16,7 @@
       "src/layouts/home.vue"
     ],
     "css": [
-      "assets/app.a91728cc.css"
+      "assets/app.b2ce21de.css"
     ]
   },
   "_vendor.1e48345a.js": {
@@ -36,23 +35,11 @@
       "_vendor.1e48345a.js"
     ],
     "css": [
-      "assets/_...all_.17300097.css"
-    ]
-  },
-  "src/pages/[...all].vue": {
-    "file": "assets/_...all_.6e0c3775.js",
-    "src": "src/pages/[...all].vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "_vendor.1e48345a.js",
-      "index.html"
-    ],
-    "css": [
-      "assets/_...all_.17300097.css"
+      "assets/README.5721fcbe.css"
     ]
   },
   "src/pages/hi/[name].vue": {
-    "file": "assets/_name_.364ec387.js",
+    "file": "assets/_name_.f0e9a060.js",
     "src": "src/pages/hi/[name].vue",
     "isDynamicEntry": true,
     "imports": [
@@ -60,7 +47,7 @@
       "index.html"
     ],
     "css": [
-      "assets/_name_.f5fee9ff.css"
+      "assets/_name_.48fb917d.css"
     ]
   },
   "src/pages/mine/README.md": {
@@ -71,7 +58,7 @@
       "_vendor.1e48345a.js"
     ],
     "css": [
-      "assets/_...all_.17300097.css"
+      "assets/README.5721fcbe.css"
     ]
   },
   "src/pages/mine/index.vue": {
@@ -82,7 +69,7 @@
       "_vendor.1e48345a.js"
     ],
     "css": [
-      "assets/index.2518671f.css"
+      "assets/index.30a50ffc.css"
     ]
   },
   "src/layouts/404.vue": {
@@ -93,11 +80,11 @@
       "_vendor.1e48345a.js"
     ],
     "css": [
-      "assets/404.9d49a35f.css"
+      "assets/404.c371f16e.css"
     ]
   },
   "src/layouts/home.vue": {
-    "file": "assets/home.99f85187.js",
+    "file": "assets/home.ba3cdd9b.js",
     "src": "src/layouts/home.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -105,7 +92,7 @@
       "_vendor.1e48345a.js"
     ],
     "css": [
-      "assets/home.0f010877.css"
+      "assets/home.649700e8.css"
     ]
   }
 }
