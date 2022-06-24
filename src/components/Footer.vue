@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { toggleDark, useMode } from '~/composables'
 import { UseColorMode } from '@vueuse/components'
-
+import { toggleDark, useMode } from '~/composables'
 
 const { t, availableLocales, locale } = useI18n()
 
