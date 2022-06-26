@@ -7,10 +7,11 @@ const { t, availableLocales, locale } = useI18n()
 const mode = useColorMode({
   modes: {
     contrast: 'contrast dark',
-    cafe: 'dark',
+    dark: 'dark',
   },
 })
-const { next } = useCycleList(['dark', 'cafe'], { initialValue: mode })
+// const { next } = useCycleList(['dark', 'cafe'], { initialValue: mode })
+const { next } = useCycleList(['dark'], { initialValue: mode })
 
 const toggleLocales = () => {
   // change to some real logic
@@ -30,7 +31,8 @@ const toggleLocales = () => {
       :title="t('button.toggle_dark')"
       @click="next()"
     >
-      <div i="carbon-sun dark:carbon-moon" />
+      <!-- <div i="carbon-sun dark:carbon-moon" /> -->
+      <div i="dark:carbon-moon" />
     </button>
 
     <!-- <a class="icon-btn mx-2" :title="t('button.toggle_langs')" @click="toggleLocales">

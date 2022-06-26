@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { NButton, NPopselect } from 'naive-ui'
-// import pkg from 'naive-ui';
-// const { NPopselect, NButton } = pkg;
 import { initPixi } from './animation'
 import MineArea from './components/MineArea'
 import { options } from './config'

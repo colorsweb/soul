@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/app.21f036e2.js",
+    "file": "assets/app.04ab5c17.js",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
@@ -21,7 +21,7 @@
     "isDynamicEntry": true
   },
   "src/pages/README.md": {
-    "file": "assets/README.86b6c167.js",
+    "file": "assets/README.325392e4.js",
     "src": "src/pages/README.md",
     "isDynamicEntry": true,
     "imports": [
@@ -32,7 +32,7 @@
     ]
   },
   "src/pages/mine/README.md": {
-    "file": "assets/README.0cb24888.js",
+    "file": "assets/README.7d06c198.js",
     "src": "src/pages/mine/README.md",
     "isDynamicEntry": true,
     "imports": [
@@ -43,7 +43,7 @@
     ]
   },
   "src/pages/mine/index.vue": {
-    "file": "assets/index.dfd5c355.js",
+    "file": "assets/index.c6a3bad4.js",
     "src": "src/pages/mine/index.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -54,7 +54,7 @@
     ]
   },
   "src/layouts/404.vue": {
-    "file": "assets/404.b9a5b0cb.js",
+    "file": "assets/404.1f92c38c.js",
     "src": "src/layouts/404.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -65,7 +65,7 @@
     ]
   },
   "src/layouts/home.vue": {
-    "file": "assets/home.362ccc07.js",
+    "file": "assets/home.c04b3827.js",
     "src": "src/layouts/home.vue",
     "isDynamicEntry": true,
     "imports": [
