@@ -3,6 +3,10 @@ import { NButton, NPopselect } from 'naive-ui'
 import { initPixi } from './animation'
 import MineArea from './components/MineArea'
 import { options } from './config'
+import { useThemeStore } from '~/stores'
+import { colorModeMap } from '~/config'
+
+const themeSotre = useThemeStore()
 const showMineArea = ref(false)
 const matrixValue = ref(0)
 const start = (val: number) => {
@@ -32,17 +36,17 @@ onMounted(() => {
     </div>
     <div class="mine-container">
       <n-popselect v-if="!showMineArea" :options="options" trigger="click" :on-update:value="start">
-        <n-button type="primary">
+        <n-button :type="colorModeMap[themeSotre.colorMode]">
           start
         </n-button>
       </n-popselect>
       <MineArea v-if="showMineArea" :key="MineAreaKey" v-bind="options[matrixValue]" />
       <br>
-      <n-button v-if="showMineArea" type="warning" @click="back">
+      <n-button v-if="showMineArea" :type="colorModeMap[themeSotre.colorMode]" @click="back">
         back
       </n-button>
       <br>
-      <n-button v-if="showMineArea" type="info" @click="restart">
+      <n-button v-if="showMineArea" :type="colorModeMap[themeSotre.colorMode]" @click="restart">
         restart
       </n-button>
     </div>
